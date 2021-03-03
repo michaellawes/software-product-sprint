@@ -26,3 +26,11 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
+async function showWeek2() {
+	  const responseFromServer = await fetch('/week-2');
+	  const textFromResponse = await responseFromServer.text();
+
+	  const week2Container = document.getElementById('week-2-container');
+	  week2Container.innerText = textFromResponse;
+}
