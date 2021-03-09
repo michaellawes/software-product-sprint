@@ -1,10 +1,17 @@
 package com.google.sps.servlets;
 
 import java.io.IOException;
+import com.google.cloud.datastore.Datastore;
+import com.google.cloud.datastore.DatastoreOptions;
+import com.google.cloud.datastore.Entity;
+import com.google.cloud.datastore.FullEntity;
+import com.google.cloud.datastore.KeyFactory;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
 		
 @WebServlet("/form-handler")
 public class FormHandlerServlet extends HttpServlet {
@@ -13,14 +20,21 @@ public class FormHandlerServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws IOException {		    
 		// Get the value entered in the form.	
-		 String name = request.getParameter("name");
-		 String email = request.getParameter("email");
-		 String subject = request.getParameter("subject");
-		 String text = request.getParameter("text");
+		 String name = Jsoup.clean(request.getParameter("name"), Whitelist.none());
+		 String email = Jsoup.clean(request.getParameter("email"), Whitelist.none());
+		 String subject = Jsoup.clean(request.getParameter("subject"), Whitelist.none());
+		 String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
 
-		// Print the value so you can see it in the server logs.
-		System.out.println("Recevied " + subject +  " from " + name 
-					+ " at " + email + " saying " + text);
+		 Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
+		 KeyFactory keyFactory = datastore.newKeyFactory().setKind("Task");
+		 FullEntity taskEntity = 
+			 Entity.newBuilder(keyFactory.newKey())
+			 	.set("name", name)
+				.set("email", email)
+				.set("subject", subject)
+				.set("text", text)
+				.build();
+		 datastore.put(taskEntity);
 
 		// Write the value to the response so the user can see it.
 		response.getWriter().println("You submitted " + subject 
