@@ -26,7 +26,7 @@ public class FormHandlerServlet extends HttpServlet {
 		 String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
 
 		 Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
-		 KeyFactory keyFactory = datastore.newKeyFactory().setKind("Task");
+		 KeyFactory keyFactory = datastore.newKeyFactory().setKind("FormResponse");
 		 FullEntity taskEntity = 
 			 Entity.newBuilder(keyFactory.newKey())
 			 	.set("name", name)
