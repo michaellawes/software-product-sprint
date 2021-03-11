@@ -34,3 +34,40 @@ async function showWeek2() {
   const fetchContainer = document.getElementById('fetch-container');
   fetchContainer.innerText = msg;
 }
+
+function loadFormResponses() {
+  fetch('/list-responses').then(response => response.json()).then((formResponses) => {
+    const responseListElement = document.getElementById('form-responses');
+    formResponses.forEach((formResponse) => {
+      responseListElement.appendChild(createResponseElement(formResponse));
+    })
+  });
+}
+
+function createResponseElement(formResponse) {
+  const responseElement = document.createElement('li');
+  responseElement.className = 'task';
+
+  const nameElement = docuemnt.createElement('span');
+  nameElement.innerText = formResponse.name;
+  const emailElement = docuemnt.createElement('span');
+  emailElement.innerText = formResponse.email;
+  const subjectElement = docuemnt.createElement('span');
+  subjectElement.innerText = formResponse.subject;
+  const textElement = docuemnt.createElement('span');
+  textElement.innerText = formResponse.text;
+
+  const deleteResponseElemenet = document.createElement('button');
+  deleteButtonElement.innerText = 'Delete';
+  deleteButtonElement.addEventListener('click', () => {
+    // Remove response from the DOM
+    responseElement.remove();
+  });
+
+  responseElement.appendChild(nameElement);
+  responseElement.appendChild(emailElement);
+  responseElement.appendChild(subjectElement);
+  responseElement.appendChild(textElement);
+  responseElement.appendChild(deleteElement);
+  return responseElement;
+}
