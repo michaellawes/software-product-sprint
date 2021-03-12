@@ -48,18 +48,18 @@ function createResponseElement(formResponse) {
   const responseElement = document.createElement('li');
   responseElement.className = 'task';
 
-  const nameElement = docuemnt.createElement('span');
+  const nameElement = document.createElement('span');
   nameElement.innerText = formResponse.name;
-  const emailElement = docuemnt.createElement('span');
+  const emailElement = document.createElement('span');
   emailElement.innerText = formResponse.email;
-  const subjectElement = docuemnt.createElement('span');
+  const subjectElement = document.createElement('span');
   subjectElement.innerText = formResponse.subject;
-  const textElement = docuemnt.createElement('span');
+  const textElement = document.createElement('span');
   textElement.innerText = formResponse.text;
 
-  const deleteResponseElemenet = document.createElement('button');
-  deleteButtonElement.innerText = 'Delete';
-  deleteButtonElement.addEventListener('click', () => {
+  const deleteResponseElement = document.createElement('button');
+  deleteResponseElement.innerText = 'Delete';
+  deleteResponseElement.addEventListener('click', () => {
     // Remove response from the DOM
     responseElement.remove();
   });
@@ -68,6 +68,6 @@ function createResponseElement(formResponse) {
   responseElement.appendChild(emailElement);
   responseElement.appendChild(subjectElement);
   responseElement.appendChild(textElement);
-  responseElement.appendChild(deleteElement);
+  responseElement.appendChild(deleteResponseElement);
   return responseElement;
 }
