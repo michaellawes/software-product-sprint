@@ -26,15 +26,15 @@ public class FormHandlerServlet extends HttpServlet {
 		 String text = Jsoup.clean(request.getParameter("text"), Whitelist.none());
 
 		 Datastore datastore = DatastoreOptions.getDefaultInstance().getService();
-		 KeyFactory keyFactory = datastore.newKeyFactory().setKind("FormResponse");
-		 FullEntity taskEntity = 
+		 KeyFactory keyFactory = datastore.newKeyFactory().setKind("Task");
+		 FullEntity formResponse = 
 			 Entity.newBuilder(keyFactory.newKey())
 			 	.set("name", name)
 				.set("email", email)
 				.set("subject", subject)
 				.set("text", text)
 				.build();
-		 datastore.put(taskEntity);
+		 datastore.put(formResponse);
 
 		// Write the value to the response so the user can see it.
 		response.getWriter().println("You submitted " + subject 
